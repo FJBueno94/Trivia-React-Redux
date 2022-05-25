@@ -46,10 +46,10 @@ describe('Test the <Login.js /> pages', () => {
   it(`Verifica se existe um botão "Settings" e se ele redireciona 
   para a pagina "/Settings"`, () => {
     const { history } = renderWithRouter(<App />);
-    const buttonSetting = screen.getByRole('button', {  name: /settings/i})
-    expect(buttonSetting).toBeInTheDocument();
+    const buttonSettings = screen.getByRole('button', {  name: /settings/i})
+    expect(buttonSettings).toBeInTheDocument();
 
-    userEvent.click(buttonSetting);
+    userEvent.click(buttonSettings);
 
     const { pathname } = history.location;
 
