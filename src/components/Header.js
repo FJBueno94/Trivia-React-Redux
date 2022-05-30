@@ -20,12 +20,12 @@ class Header extends Component {
 
   render() {
     const { hash } = this.state;
-    const { name } = this.props;
+    const { name, score } = this.props;
     return (
       <div>
         <p data-testid="header-player-name">{name}</p>
         <img src={ `https://www.gravatar.com/avatar/${hash}` } alt="profile avatar" data-testid="header-profile-picture" />
-        <p data-testid="header-score">0</p>
+        <p data-testid="header-score">{ score }</p>
       </div>
     );
   }
@@ -34,11 +34,13 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   email: state.player.gravatarEmail,
   name: state.player.name,
+  score: state.player.score,
 });
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

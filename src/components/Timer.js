@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { addTimerAction } from '../redux/actions';
 
 class Timer extends Component {
   constructor() {
@@ -29,9 +31,11 @@ class Timer extends Component {
   stopTimer = () => {
     const {
       state: { maxTime },
-      props: { clicked },
+      props: { clicked, addTimer },
     } = this;
     if (maxTime === 0) clicked();
+
+    addTimer(maxTime);
   }
 
   render() {
@@ -42,8 +46,13 @@ class Timer extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  addTimer: (value) => dispatch(addTimerAction(value)),
+});
+
 Timer.propTypes = {
   clicked: PropTypes.func.isRequired,
+  addTimer: PropTypes.func.isRequired,
 };
 
-export default Timer;
+export default connect(null, mapDispatchToProps)(Timer);
