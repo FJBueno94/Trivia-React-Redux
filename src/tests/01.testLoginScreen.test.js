@@ -39,6 +39,8 @@ describe('Test the <Login.js /> pages', () => {
 
     userEvent.click(buttonPlay);
 
+    // Vamos precisar Muca-r sim!
+
     const { pathname } = history.location;
 
     expect(pathname).toBe('/game');
