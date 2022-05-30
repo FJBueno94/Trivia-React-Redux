@@ -51,6 +51,7 @@ class Game extends Component {
               <CardQuestion
                 question={ questions[questionNum] }
                 changeQuestion={ this.changeQuestion }
+                questionNum={ questionNum }
               />
             </div>
           )
