@@ -33,7 +33,6 @@ class Game extends Component {
     const { history, respCode } = this.props;
     if (respCode !== 0) {
       localStorage.setItem('data', '');
-      console.log('aqui');
       history.push('/');
     }
   }
@@ -42,6 +41,7 @@ class Game extends Component {
     const { respCode, questions } = this.props;
     const { questionNum } = this.state;
     const invalidTokenResponse = 3;
+
     return (
       <div>
         <Header />
@@ -49,8 +49,8 @@ class Game extends Component {
           ? questions.length > 0 && (
             <div>
               <CardQuestion
-                question={ questions[questionNum] }
                 changeQuestion={ this.changeQuestion }
+                question={ questions[questionNum] }
                 questionNum={ questionNum }
               />
             </div>

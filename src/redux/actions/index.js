@@ -2,6 +2,8 @@ export const PLAYER_INFO = 'PLAYER_INFO';
 export const ADD_PLAYER = 'ADD_PLAYER';
 export const GET_TOKEN = 'GET_TOKEN';
 export const ADD_QUESTIONS = 'ADD_QUESTIONS';
+export const ADD_TIMER = 'ADD_TIMER';
+export const ADD_SCORE = 'ADD_SCORE';
 
 export const playerAction = (state) => ({ type: PLAYER_INFO, state });
 
@@ -21,6 +23,20 @@ export const addQuestionsAction = (state) => ({
   type: ADD_QUESTIONS,
   payload: {
     ...state,
+  },
+});
+
+export const addTimerAction = (state) => ({
+  type: ADD_TIMER,
+  payload: {
+    timer: state,
+  },
+});
+
+export const addScoreAction = (score) => ({
+  type: ADD_SCORE,
+  payload: {
+    score,
   },
 });
 

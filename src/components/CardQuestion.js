@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import '../style/Game.css';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Timer from './Timer';
+import { addScoreAction } from '../redux/actions';
 
 class CardQuestion extends Component {
   constructor() {
@@ -40,7 +42,23 @@ class CardQuestion extends Component {
     }
   }
 
-  clickedButton = () => {
+  clickedButton = (event) => {
+    const { question, timer, addScore } = this.props;
+
+    const difficulties = { hard: 3,
+      medium: 2,
+      easy: 1,
+    };
+
+    if (event) {
+      const { target } = event;
+      if (target.innerHTML === question.correct_answer) {
+        const defaultPoint = 10;
+        const points = defaultPoint + (difficulties[question.difficulty] * timer);
+        addScore(points);
+      }
+    }
+
     this.setState({
       isClicked: true,
       next: true,
@@ -75,8 +93,8 @@ class CardQuestion extends Component {
             <button
               type="button"
               data-testid="btn-next"
-              onClick={ () => {
-                changeQuestion();
+              onClick={ async () => {
+                await changeQuestion();
                 this.updateAnswer();
               } }
             >
@@ -94,15 +112,26 @@ class CardQuestion extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  timer: state.timer.timer,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addScore: (value) => dispatch(addScoreAction(value)),
+});
+
 CardQuestion.propTypes = {
   question: PropTypes.shape({
     category: PropTypes.string,
     question: PropTypes.string,
     correct_answer: PropTypes.string,
+    difficulty: PropTypes.string,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   changeQuestion: PropTypes.func.isRequired,
   questionNum: PropTypes.number.isRequired,
+  timer: PropTypes.string.isRequired,
+  addScore: PropTypes.func.isRequired,
 };
 
-export default CardQuestion;
+export default connect(mapStateToProps, mapDispatchToProps)(CardQuestion);
