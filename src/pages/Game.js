@@ -21,12 +21,17 @@ class Game extends Component {
   }
 
   changeQuestion = () => {
-    const questionLimit = 4;
-
     this.setState((prevstate) => (
-      { questionNum: prevstate.questionNum < questionLimit
-        ? prevstate.questionNum + 1 : 0 }
-    ));
+      { questionNum: prevstate.questionNum + 1 }
+    ), () => {
+      const { history } = this.props;
+      const { questionNum } = this.state;
+      const maxQuestions = 4;
+
+      if (questionNum > maxQuestions) {
+        history.push('/feedback');
+      }
+    });
   }
 
   tokenInvalid() {
@@ -38,20 +43,22 @@ class Game extends Component {
   }
 
   render() {
-    const { respCode, questions } = this.props;
+    const { history, respCode, questions } = this.props;
     const { questionNum } = this.state;
     const invalidTokenResponse = 3;
+    const maxQuestions = 4;
 
     return (
       <div>
         <Header />
         {respCode !== invalidTokenResponse
-          ? questions.length > 0 && (
+          ? questions.length > 0 && questionNum <= maxQuestions && (
             <div>
               <CardQuestion
                 changeQuestion={ this.changeQuestion }
                 question={ questions[questionNum] }
                 questionNum={ questionNum }
+                history={ history }
               />
             </div>
           )

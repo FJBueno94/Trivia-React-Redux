@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import '../style/Game.css';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Timer from './Timer';
 import { addScoreAction } from '../redux/actions';
@@ -14,7 +13,6 @@ class CardQuestion extends Component {
       answers: [],
       isClicked: false,
       next: false,
-      isOver: false,
     };
   }
 
@@ -23,23 +21,17 @@ class CardQuestion extends Component {
   }
 
   updateAnswer = () => {
-    const { question, questionNum } = this.props;
-    const maxQuestions = 4;
+    const { question } = this.props;
 
-    if (questionNum < maxQuestions) {
-      const wrongAnswers = question.incorrect_answers
-        .map((answer, index) => ({ answer, index, test: `wrong-answer-${index}` }));
+    const wrongAnswers = question.incorrect_answers
+      .map((answer, index) => ({ answer, index, test: `wrong-answer-${index}` }));
+    const answers = [...wrongAnswers,
+      { answer: question.correct_answer, index: 4, test: 'correct-answer' }];
 
-      const answers = [...wrongAnswers,
-        { answer: question.correct_answer, index: 4, test: 'correct-answer' }];
+    const numRandom = 0.5;
+    const shuffledAnswers = answers.sort(() => Math.random() - numRandom);
 
-      const numRandom = 0.5;
-      const shuffledAnswers = answers.sort(() => Math.random() - numRandom);
-
-      this.setState({ answers: shuffledAnswers, isClicked: false, next: false });
-    } else {
-      this.setState({ isOver: true });
-    }
+    this.setState({ answers: shuffledAnswers, isClicked: false, next: false });
   }
 
   clickedButton = (event) => {
@@ -67,11 +59,10 @@ class CardQuestion extends Component {
 
   render() {
     const { question, changeQuestion } = this.props;
-    const { answers, isClicked, next, isOver } = this.state;
+    const { answers, isClicked, next } = this.state;
 
     return (
       <div>
-        {isOver && <Redirect to="/feedback" />}
         <p data-testid="question-category">{question.category}</p>
         <h3 data-testid="question-text">{question.question}</h3>
         <div data-testid="answer-options">
@@ -129,7 +120,6 @@ CardQuestion.propTypes = {
     incorrect_answers: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   changeQuestion: PropTypes.func.isRequired,
-  questionNum: PropTypes.number.isRequired,
   timer: PropTypes.string.isRequired,
   addScore: PropTypes.func.isRequired,
 };
