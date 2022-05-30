@@ -26,16 +26,17 @@ describe('Test the <Login.js /> pages', () => {
     userEvent.type(inputName, 'F');
     expect(buttonPlay).toBeEnabled();
   })
-  it('Verifica se ao clicar em "Play" a página é redirecionada para "/games"', () => {
+  it('Verifica se ao clicar em "Play" a página é redirecionada para "/games"', async () => {
     const { history } = renderWithRouter(<App />);
     
     const inputName = screen.getByLabelText(/nome:/i);
-    userEvent.type(inputName, 'F');
+    userEvent.type(inputName, 'Eu');
     const email = 'email@email.com';
     const inputEmail = screen.getByLabelText(/email:/i);
     userEvent.type(inputEmail, email);
-
+    
     const buttonPlay = screen.getByRole('button', { name: /play/i });
+    expect(buttonPlay).toBeEnabled();
 
     userEvent.click(buttonPlay);
 
@@ -44,6 +45,8 @@ describe('Test the <Login.js /> pages', () => {
     const { pathname } = history.location;
 
     expect(pathname).toBe('/game');
+
+    await screen.findByText(/Eu/i);
   })
   it(`Verifica se existe um botão "Settings" e se ele redireciona 
   para a pagina "/Settings"`, () => {
