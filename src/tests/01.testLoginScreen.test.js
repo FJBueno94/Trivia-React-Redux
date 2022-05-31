@@ -1,12 +1,12 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import renderWithRouter from './helpers/renderWithRouterAndRedux';
-import Login from '../pages/Login';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import object from './mockTrivia/API';
 
 describe('Test the <Login.js /> pages', () => {
-  it('Verifica se existe um input name e email', ()=> {
+  it('Verifica se existe um input name e email', () => {
     renderWithRouter(<App />);
     const inputName = screen.getByLabelText(/nome:/i);
     const inputEmail = screen.getByLabelText(/email:/i);
@@ -26,30 +26,33 @@ describe('Test the <Login.js /> pages', () => {
     userEvent.type(inputName, 'F');
     expect(buttonPlay).toBeEnabled();
   })
-  it('Verifica se ao clicar em "Play" a página é redirecionada para "/games"', () => {
+  it('Verifica se ao clicar em "Play" a página é redirecionada para "/game"', () => {
     const { history } = renderWithRouter(<App />);
-    
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue(object),
+    });
     const inputName = screen.getByLabelText(/nome:/i);
-    userEvent.type(inputName, 'F');
+    userEvent.type(inputName, 'Eu');
     const email = 'email@email.com';
     const inputEmail = screen.getByLabelText(/email:/i);
     userEvent.type(inputEmail, email);
-
+    
     const buttonPlay = screen.getByRole('button', { name: /play/i });
+    expect(buttonPlay).toBeEnabled();
 
     userEvent.click(buttonPlay);
-
-    const { pathname } = history.location;
-
+    const { location: { pathname } } = history;
     expect(pathname).toBe('/game');
+    global.fetch.mockRestore();
+
   })
   it(`Verifica se existe um botão "Settings" e se ele redireciona 
   para a pagina "/Settings"`, () => {
     const { history } = renderWithRouter(<App />);
-    const buttonSetting = screen.getByRole('button', {  name: /settings/i})
-    expect(buttonSetting).toBeInTheDocument();
+    const buttonSettings = screen.getByRole('button', {  name: /settings/i})
+    expect(buttonSettings).toBeInTheDocument();
 
-    userEvent.click(buttonSetting);
+    userEvent.click(buttonSettings);
 
     const { pathname } = history.location;
 
