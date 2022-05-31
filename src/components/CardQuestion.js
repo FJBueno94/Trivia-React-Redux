@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import '../style/Game.css';
 import { connect } from 'react-redux';
 import Timer from './Timer';
-import { addScoreAction } from '../redux/actions';
+import { addScoreAction, addAssertionsAction } from '../redux/actions';
 
 class CardQuestion extends Component {
   constructor() {
@@ -13,6 +13,7 @@ class CardQuestion extends Component {
       answers: [],
       isClicked: false,
       next: false,
+      assertions: 0,
     };
   }
 
@@ -47,6 +48,7 @@ class CardQuestion extends Component {
       if (target.innerHTML === question.correct_answer) {
         const defaultPoint = 10;
         const points = defaultPoint + (difficulties[question.difficulty] * timer);
+        this.setState((prevState) => ({ assertions: prevState.assertions + 1 }));
         addScore(points);
       }
     }
@@ -57,10 +59,16 @@ class CardQuestion extends Component {
     });
   }
 
+  componentWillUnmount = () => {
+    const { addAssertions } = this.props;
+    const { assertions } = this.state;
+    addAssertions(assertions);
+  }
+
   render() {
     const { question, changeQuestion } = this.props;
-    const { answers, isClicked, next } = this.state;
-
+    const { answers, isClicked, next, assertions } = this.state;
+    console.log(assertions);
     return (
       <div>
         <p data-testid="question-category">{question.category}</p>
@@ -109,6 +117,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addScore: (value) => dispatch(addScoreAction(value)),
+  addAssertions: (value) => dispatch(addAssertionsAction(value)),
 });
 
 CardQuestion.propTypes = {
@@ -122,6 +131,7 @@ CardQuestion.propTypes = {
   changeQuestion: PropTypes.func.isRequired,
   timer: PropTypes.string.isRequired,
   addScore: PropTypes.func.isRequired,
+  addAssertions: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardQuestion);

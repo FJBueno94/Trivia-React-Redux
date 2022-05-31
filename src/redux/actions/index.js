@@ -4,6 +4,7 @@ export const GET_TOKEN = 'GET_TOKEN';
 export const ADD_QUESTIONS = 'ADD_QUESTIONS';
 export const ADD_TIMER = 'ADD_TIMER';
 export const ADD_SCORE = 'ADD_SCORE';
+export const ADD_ASSEERTIONS = 'ADD_ASSEERTIONS';
 
 export const playerAction = (state) => ({ type: PLAYER_INFO, state });
 
@@ -11,6 +12,13 @@ export const addPlayerAction = (state) => ({
   type: ADD_PLAYER,
   payload: {
     ...state,
+  },
+});
+
+export const addAssertionsAction = (state) => ({
+  type: ADD_ASSEERTIONS,
+  payload: {
+    assertions: state,
   },
 });
 
