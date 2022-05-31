@@ -6,7 +6,7 @@ import App from '../App';
 import object from './mockTrivia/API';
 
 describe('Test the <Login.js /> pages', () => {
-  it('Verifica se existe um input name e email', ()=> {
+  it('Verifica se existe um input name e email', () => {
     renderWithRouter(<App />);
     const inputName = screen.getByLabelText(/nome:/i);
     const inputEmail = screen.getByLabelText(/email:/i);
