@@ -42,7 +42,7 @@ class Feedback extends Component {
           onClick={ () => redirectButton('/') }
           data-testid="btn-play-again"
         >
-          Ranking
+          Play Again
 
         </button>
       </div>
