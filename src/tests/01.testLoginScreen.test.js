@@ -28,7 +28,7 @@ describe('Test the <Login.js /> pages', () => {
   })
   it('Verifica se ao clicar em "Play" a página é redirecionada para "/game"', () => {
     const { history } = renderWithRouter(<App />);
-    global.fetch = jest.fn().mockResolvedValue({
+    jest.spyOn(global, 'fetch').mockResolvedValue({
       json: jest.fn().mockResolvedValue(object),
     });
     const inputName = screen.getByLabelText(/nome:/i);
