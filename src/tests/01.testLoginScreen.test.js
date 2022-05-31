@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import renderWithRouter from './helpers/renderWithRouterAndRedux';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import object from '../mockTrivia/API';
+import object from './mockTrivia/API';
 
 describe('Test the <Login.js /> pages', () => {
   it('Verifica se existe um input name e email', ()=> {
