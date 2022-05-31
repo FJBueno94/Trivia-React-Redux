@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 
 class Feedback extends Component {
@@ -9,11 +10,16 @@ class Feedback extends Component {
   }
 
   render() {
-    const { redirectButton } = this;
+    const { redirectButton, props: { assertions } } = this;
+    const THREE_ANSWERS = 3;
+    console.log(assertions);
     return (
       <div>
         <Header />
-        <p data-testid="feedback-text">Feedback</p>
+        <h2>Result</h2>
+        <span data-testid="feedback-text">
+          { assertions < THREE_ANSWERS ? 'Could be better...' : 'Well Done!' }
+        </span>
         <button
           type="button"
           onClick={ redirectButton }
@@ -27,10 +33,15 @@ class Feedback extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  assertions: state.player.assertions,
+});
+
 Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  assertions: PropTypes.number.isRequired,
 };
 
-export default Feedback;
+export default connect(mapStateToProps)(Feedback);

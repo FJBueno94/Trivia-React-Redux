@@ -1,4 +1,9 @@
-import { PLAYER_INFO, ADD_PLAYER, ADD_SCORE } from '../actions';
+import {
+  PLAYER_INFO,
+  ADD_PLAYER,
+  ADD_SCORE,
+  ADD_ASSEERTIONS,
+} from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -21,6 +26,11 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: state.score + action.payload.score,
+    };
+  case ADD_ASSEERTIONS:
+    return {
+      ...state,
+      assertions: action.payload.assertions,
     };
   default:
     return state;
