@@ -1,9 +1,9 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import renderWithRouter from './helpers/renderWithRouterAndRedux';
-import Login from '../pages/Login';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import object from '../mockTrivia/API';
 
 describe('Test the <Login.js /> pages', () => {
   it('Verifica se existe um input name e email', ()=> {
@@ -26,9 +26,11 @@ describe('Test the <Login.js /> pages', () => {
     userEvent.type(inputName, 'F');
     expect(buttonPlay).toBeEnabled();
   })
-  it('Verifica se ao clicar em "Play" a página é redirecionada para "/games"', async () => {
+  it('Verifica se ao clicar em "Play" a página é redirecionada para "/game"', () => {
     const { history } = renderWithRouter(<App />);
-    
+    global.fetch = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue(object),
+    });
     const inputName = screen.getByLabelText(/nome:/i);
     userEvent.type(inputName, 'Eu');
     const email = 'email@email.com';
@@ -39,14 +41,10 @@ describe('Test the <Login.js /> pages', () => {
     expect(buttonPlay).toBeEnabled();
 
     userEvent.click(buttonPlay);
-
-    // Vamos precisar Muca-r sim!
-
-    const { pathname } = history.location;
-
+    const { location: { pathname } } = history;
     expect(pathname).toBe('/game');
+    global.fetch.mockRestore();
 
-    await screen.findByText(/Eu/i);
   })
   it(`Verifica se existe um botão "Settings" e se ele redireciona 
   para a pagina "/Settings"`, () => {
