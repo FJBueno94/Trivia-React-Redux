@@ -1,15 +1,15 @@
 .correct-answer {
-  border: 3px solid rgb(6, 240, 15);
+  background-color: rgb(34, 170, 34);
 }
 
 .wrong-answer-0 {
-  border: 3px solid red;
+  background-color: rgb(235, 41, 41);
 }
 
 .wrong-answer-1 {
-  border: 3px solid red;
+  background-color: rgb(235, 41, 41);
 }
 
 .wrong-answer-2 {
-  border: 3px solid red;
+  background-color: rgb(235, 41, 41);
 }

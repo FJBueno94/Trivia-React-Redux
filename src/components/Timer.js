@@ -41,7 +41,7 @@ class Timer extends Component {
   render() {
     const { state: { maxTime } } = this;
     return (
-      <div>{maxTime.toString().padStart(2, '0')}</div>
+      <div className="">{maxTime.toString().padStart(2, '0')}</div>
     );
   }
 }

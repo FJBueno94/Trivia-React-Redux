@@ -69,14 +69,28 @@ class CardQuestion extends Component {
     const { question, changeQuestion } = this.props;
     const { answers, isClicked, next } = this.state;
     return (
-      <div>
-        <p data-testid="question-category">{question.category}</p>
-        <h3 data-testid="question-text">{question.question}</h3>
-        <div data-testid="answer-options">
+      <div className="flex flex-col justify-around">
+        <p
+          data-testid="question-category"
+          className="mx-auto text-xl mb-4 text-slate-500"
+        >
+          {question.category}
+        </p>
+        <h3
+          data-testid="question-text"
+          className="mx-auto text-2xl font-bold mb-4"
+        >
+          {question.question}
+        </h3>
+        <div data-testid="answer-options" className="flex flex-col justify-around">
           { answers.map((elem) => (
             <button
               key={ elem.index }
-              className={ isClicked ? elem.test : '' }
+              className={
+                `rounded-md p-3 text-white w-2/5 bg-blue-500
+                mx-auto mt-2 mb-2 font-bold
+                ${isClicked ? elem.test : ''}`
+              }
               type="button"
               data-testid={ elem.test }
               onClick={ this.clickedButton }
@@ -86,21 +100,26 @@ class CardQuestion extends Component {
             </button>
           )) }
         </div>
-        {
-          next && (
-            <button
-              type="button"
-              data-testid="btn-next"
-              onClick={ async () => {
-                await changeQuestion();
-                this.updateAnswer();
-              } }
-            >
-              Next Question
-            </button>
-          )
-        }
-        <div>
+        <div className="flex justify-center mt-2">
+          {
+            next && (
+              <button
+                type="button"
+                data-testid="btn-next"
+                onClick={ async () => {
+                  await changeQuestion();
+                  this.updateAnswer();
+                } }
+                className="flex items-center justify-center
+              bg-purple-700 rounded p-3 text-white w-2/5
+              hover:bg-purple-900 w-[75%]"
+              >
+                Next Question
+              </button>
+            )
+          }
+        </div>
+        <div className="flex justify-end">
           {
             !isClicked && <Timer clicked={ this.clickedButton } />
           }

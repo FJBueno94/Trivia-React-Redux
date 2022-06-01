@@ -65,7 +65,10 @@ class Game extends Component {
         <Header />
         {respCode !== invalidTokenResponse
           ? questions.length > 0 && questionNum <= maxQuestions && (
-            <div>
+            <div
+              className="flex flex-col m-auto justify-around
+              rounded w-2/5 h-fit mt-[4%] p-8 bg-white rounded-md"
+            >
               <CardQuestion
                 changeQuestion={ this.changeQuestion }
                 question={ questions[questionNum] }

@@ -22,7 +22,7 @@ class Header extends Component {
     const { hash } = this.state;
     const { name, score } = this.props;
     return (
-      <div className="flex flex-row justify-between bg-blue-500 h-20">
+      <div className="flex flex-row justify-between bg-blue-500 h-20 text-white">
         <div className="flex flex-row">
           <img
             src={ `https://www.gravatar.com/avatar/${hash}` }
