@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addPlayerAction, getTokenThunk } from '../redux/actions';
+import { addPlayerAction, getTokenThunk, addScoreAction } from '../redux/actions';
 import logo from '../trivia.png';
 
 class Login extends Component {
@@ -12,6 +12,11 @@ class Login extends Component {
       email: '',
       disabled: true,
     };
+  }
+
+  componentDidMount = () => {
+    const { addScore } = this.props;
+    addScore(0, true);
   }
 
   handleChange = ({ target }) => {
@@ -107,6 +112,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  addScore: (value, isOver) => dispatch(addScoreAction(value, isOver)),
   addPlayer: (value) => dispatch(addPlayerAction(value)),
   getToken: () => dispatch(getTokenThunk()),
 });
@@ -117,6 +123,7 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  addScore: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

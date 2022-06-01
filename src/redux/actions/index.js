@@ -41,10 +41,11 @@ export const addTimerAction = (state) => ({
   },
 });
 
-export const addScoreAction = (score) => ({
+export const addScoreAction = (score, isOver = false) => ({
   type: ADD_SCORE,
   payload: {
     score,
+    isOver,
   },
 });
 
@@ -55,8 +56,14 @@ export const getTokenThunk = () => async (dispatch) => {
     const token = await response.token;
     dispatch(getToken(token));
     localStorage.setItem('token', token);
-    const data = JSON.stringify({ ranking: [], token } || {});
-    localStorage.setItem('data', data);
+    const prevData = JSON.parse(localStorage.getItem('data') || null);
+    if (prevData !== null) {
+      const data = JSON.stringify({ ranking: [...prevData.ranking], token } || {});
+      localStorage.setItem('data', data);
+    } else {
+      const data = JSON.stringify({ ranking: [], token } || {});
+      localStorage.setItem('data', data);
+    }
   } catch (error) {
     console.log(error);
   }

@@ -16,19 +16,31 @@ class Game extends Component {
 
   componentDidMount() {
     const { requestQuestions } = this.props;
-    const data = JSON.parse(localStorage.getItem('data'));
-    requestQuestions(data.token);
+    const data = JSON.parse(localStorage.getItem('data') || {});
+    if (data.token !== undefined) {
+      requestQuestions(data.token);
+    }
   }
 
   changeQuestion = () => {
     this.setState((prevstate) => (
       { questionNum: prevstate.questionNum + 1 }
     ), () => {
-      const { history } = this.props;
+      const { history, playerName, score } = this.props;
       const { questionNum } = this.state;
       const maxQuestions = 4;
 
       if (questionNum > maxQuestions) {
+        const data = JSON.parse(localStorage.getItem('data'));
+        const player = [...data.ranking, {
+          playerName,
+          score,
+          img: `https://www.gravatar.com/avatar/${data.token}`,
+        }];
+        localStorage.setItem('data', JSON.stringify({
+          ranking: player,
+          token: data.token,
+        }));
         history.push('/feedback');
       }
     });
@@ -71,6 +83,8 @@ class Game extends Component {
 const mapStateToProps = (state) => ({
   respCode: state.trivia.response_code,
   questions: state.trivia.results,
+  playerName: state.player.name,
+  score: state.player.score,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -84,6 +98,8 @@ Game.propTypes = {
     push: PropTypes.func,
   }).isRequired,
   requestQuestions: PropTypes.func.isRequired,
+  playerName: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

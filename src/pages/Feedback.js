@@ -12,7 +12,6 @@ class Feedback extends Component {
   render() {
     const { redirectButton, props: { assertions, score } } = this;
     const THREE_ANSWERS = 3;
-    console.log(assertions);
     return (
       <div>
         <Header />
@@ -42,8 +41,7 @@ class Feedback extends Component {
           onClick={ () => redirectButton('/') }
           data-testid="btn-play-again"
         >
-          Ranking
-
+          Play Again
         </button>
       </div>
     );
