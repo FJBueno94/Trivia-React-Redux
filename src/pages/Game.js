@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import md5 from 'crypto-js/md5';
 import CardQuestion from '../components/CardQuestion';
 import Header from '../components/Header';
 import { getQuestionsThunk } from '../redux/actions';
@@ -35,7 +36,7 @@ class Game extends Component {
         const player = [...data.ranking, {
           playerName,
           score,
-          img: `https://www.gravatar.com/avatar/${data.token}`,
+          img: `https://www.gravatar.com/avatar/${this.hashEmail()}`,
         }];
         localStorage.setItem('data', JSON.stringify({
           ranking: player,
@@ -44,6 +45,12 @@ class Game extends Component {
         history.push('/feedback');
       }
     });
+  }
+
+  hashEmail() {
+    const { email } = this.props;
+    const hash = md5(email).toString();
+    return hash;
   }
 
   tokenInvalid() {
@@ -85,6 +92,7 @@ const mapStateToProps = (state) => ({
   questions: state.trivia.results,
   playerName: state.player.name,
   score: state.player.score,
+  email: state.player.gravatarEmail,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -100,6 +108,7 @@ Game.propTypes = {
   requestQuestions: PropTypes.func.isRequired,
   playerName: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
