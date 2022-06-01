@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FaPlay } from 'react-icons/fa';
+import { ImListNumbered } from 'react-icons/im';
 import Header from '../components/Header';
 
 class Feedback extends Component {
@@ -15,34 +17,46 @@ class Feedback extends Component {
     return (
       <div>
         <Header />
-        <h2>Result</h2>
-        <span data-testid="feedback-text">
-          { assertions < THREE_ANSWERS ? 'Could be better...' : 'Well Done!' }
-        </span>
-        <h3>
-          Score:
-          <span data-testid="feedback-total-score">{ score }</span>
-        </h3>
-        <h3>
-          Assertions:
-          <span data-testid="feedback-total-question">{ assertions }</span>
-        </h3>
-
-        <button
-          type="button"
-          onClick={ () => redirectButton('/ranking') }
-          data-testid="btn-ranking"
-        >
-          Ranking
-
-        </button>
-        <button
-          type="button"
-          onClick={ () => redirectButton('/') }
-          data-testid="btn-play-again"
-        >
-          Play Again
-        </button>
+        <div className="flex justify-center mt-[15%] h-72">
+          <div
+            className="flex flex-col justify-around
+            items-center bg-white w-96 p-8 rounded-md"
+          >
+            <p data-testid="feedback-text" className="text-3xl font-bold">
+              { assertions < THREE_ANSWERS ? 'Could be better...' : 'Well Done!' }
+            </p>
+            <h3 className="text-lg font-semibold">
+              Score:
+              <span data-testid="feedback-total-score">{ ` ${score}` }</span>
+            </h3>
+            <h3 className="text-lg font-semibold">
+              Assertions:
+              <span data-testid="feedback-total-question">{ ` ${assertions}` }</span>
+            </h3>
+            <div className="flex w-72">
+              <button
+                type="button"
+                onClick={ () => redirectButton('/ranking') }
+                data-testid="btn-ranking"
+                className="flex items-center justify-center
+                bg-purple-700 rounded p-3 text-white w-3/5 hover:bg-purple-900 mr-5"
+              >
+                <ImListNumbered className="mr-5" />
+                Ranking
+              </button>
+              <button
+                type="button"
+                onClick={ () => redirectButton('/') }
+                data-testid="btn-play-again"
+                className="flex items-center justify-center
+                bg-blue-500 rounded p-3 text-white w-3/5 hover:bg-blue-700"
+              >
+                <FaPlay className="mr-5"/>
+                Play Again
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

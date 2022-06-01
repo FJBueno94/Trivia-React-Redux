@@ -39,7 +39,12 @@ class Ranking extends Component {
           className="flex flex-col items-center justify-center
           my-auto p-8 rounded-md bg-white"
         >
-          <p data-testid="ranking-title" className="uppercase font-bold text-xl">Ranking</p>
+          <p
+            data-testid="ranking-title"
+            className="uppercase font-bold text-xl"
+          >
+            Ranking
+          </p>
           <ul className="w-96 min-h-72">
             {
               ranking.map((e, index) => (
