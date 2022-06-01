@@ -67,8 +67,7 @@ class CardQuestion extends Component {
 
   render() {
     const { question, changeQuestion } = this.props;
-    const { answers, isClicked, next, assertions } = this.state;
-    console.log(assertions);
+    const { answers, isClicked, next } = this.state;
     return (
       <div>
         <p data-testid="question-category">{question.category}</p>

@@ -41,7 +41,6 @@ class Game extends Component {
           ranking: player,
           token: data.token,
         }));
-        console.log(data);
         history.push('/feedback');
       }
     });

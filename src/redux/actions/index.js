@@ -41,10 +41,11 @@ export const addTimerAction = (state) => ({
   },
 });
 
-export const addScoreAction = (score) => ({
+export const addScoreAction = (score, isOver = false) => ({
   type: ADD_SCORE,
   payload: {
     score,
+    isOver,
   },
 });
 
