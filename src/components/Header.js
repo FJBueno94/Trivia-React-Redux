@@ -37,7 +37,20 @@ class Header extends Component {
             {name}
           </p>
         </div>
-        <p data-testid="header-score" className="place-self-center mr-3">{ score }</p>
+        <div
+          className="h-fit w-fit flex justify-center self-center
+          mr-10 rounded-full bg-purple-700"
+        >
+          <p className="place-self-center font-black mx-4">
+            Pontuação:
+            <span
+              data-testid="header-score"
+              className="place-self-center"
+            >
+              {` ${score}`}
+            </span>
+          </p>
+        </div>
       </div>
     );
   }
