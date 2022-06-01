@@ -22,10 +22,22 @@ class Header extends Component {
     const { hash } = this.state;
     const { name, score } = this.props;
     return (
-      <div>
-        <p data-testid="header-player-name">{name}</p>
-        <img src={ `https://www.gravatar.com/avatar/${hash}` } alt="profile avatar" data-testid="header-profile-picture" />
-        <p data-testid="header-score">{ score }</p>
+      <div className="flex flex-row justify-between bg-blue-500 h-20">
+        <div className="flex flex-row">
+          <img
+            src={ `https://www.gravatar.com/avatar/${hash}` }
+            alt="profile avatar"
+            data-testid="header-profile-picture"
+            className="place-self-center rounded-xl h-16 w-16 ml-3 place-self-center"
+          />
+          <p
+            data-testid="header-player-name"
+            className="place-self-center ml-3"
+          >
+            {name}
+          </p>
+        </div>
+        <p data-testid="header-score" className="place-self-center mr-3">{ score }</p>
       </div>
     );
   }
